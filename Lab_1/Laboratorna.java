@@ -5,32 +5,34 @@ public class Laboratorna {
         
         System.out.print("\nВведiть номер числа Фiбоначчi [N<=0]: ");
         Scanner input = new Scanner(System.in);
-        int N = input.nextInt();
-        if (N > 0) {
+        int pozucia = input.nextInt();
+        if (pozucia > 0) {
             System.out.println("\nПомилка!\n");
             System.exit(1);
         }
         Fibonacci object = new Fibonacci();
-        System.out.print("\nВаше число: " + object.getNumber(N) + "\n\n");
+        System.out.print("\nВаше число: " + object.getNumber(pozucia) + "\n\n");
 
     }
 
     static class Fibonacci{
         
-        private long num;
+        private long value;
 
-        Fibonacci() { num = 0; }
+        Fibonacci() { value = 0; }
 
-        public long getNumber() { return num; }
-        
-        public long getNumber(int N){
-            if (N < 0){
-                long prev = -1, next = -1;
-                while (++N < 0){
+        public long getNumber() { return value; }
+
+        public long getNumber(int pozucia){
+            if (pozucia < 0){
+                int remember = pozucia;
+                pozucia = Math.abs(pozucia);
+                long prev = 1, next = 1;
+                while (--pozucia > 0){
                     next += prev;
                     prev = next - prev;
                 }
-                return prev;
+                return prev = (long)(Math.pow(-1, remember+1) * prev);
             }
             long prev = 0;
             return prev;
