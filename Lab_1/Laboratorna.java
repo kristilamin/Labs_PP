@@ -16,12 +16,6 @@ public class Laboratorna {
     }
 
     static class Fibonacci{
-        
-        private long value;
-
-        Fibonacci() { value = 0; }
-
-        public long getNumber() { return value; }
 
         public long getNumber(int pozucia){
             if (pozucia < 0){
