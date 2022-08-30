@@ -10,12 +10,10 @@ public class Main {
     public static void enteredName(Product[] array, Scanner in) {
         System.out.print("\nЗадайте найменування товару: ");
         String tovar = in.nextLine();
-        int listIndex = 1;
         int check = 0;
         for (int i = 0; i < array.length; i++) {
             if (tovar.equals(array[i].getName())) {
-                System.out.println(listIndex + "." + array[i].toString());
-                listIndex++;
+                System.out.println(check+1 + "." + array[i].toString());
                 check++;
             }
         }
@@ -28,16 +26,10 @@ public class Main {
         System.out.print("Задайте максимальну ціну товару: ");
         int max = in.nextInt();
         int check = 0;
-        int listIndex = 1;
         for (int i = 0; i < array.length; i++) {
-            if (array[i].getPrice() > max) {
-                continue;
-            } else {
-                if (tovar.equals(array[i].getName())) {
-                    System.out.println(listIndex + "." + array[i].toString());
-                    listIndex++;
-                    check++;
-                }
+            if (array[i].getPrice() <= max && tovar.equals(array[i].getName())) {
+                System.out.println(check+1 + "." + array[i].toString());
+                check++;
             }
         }
         if (check == 0)
@@ -47,18 +39,21 @@ public class Main {
         System.out.print("\nЗадайте мінімальний термін зберігання товару: ");
         double minTerm = in.nextDouble();
         int check = 0;
-        int listIndex = 1;
         for (int i = 0; i < array.length; i++) {
             if (array[i].getTerm() > minTerm) {
-                System.out.println(listIndex + "." + array[i].toString());
-                listIndex++;
+                System.out.println(check+1 + "." + array[i].toString());
                 check++;
             }
         }
         if (check == 0)
             System.out.println("\nНемає товарів з більшим терміном зберігання!\n");
     }
-
+    public static void printArray(Product[] array){
+        System.out.println("\nЕлементи списку\n");
+        for (int i = 0; i < array.length; i++) {
+            System.out.println(array[i].toString());
+        }
+    }
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         Product[] array = new Product[9];
@@ -71,10 +66,7 @@ public class Main {
         array[6] = new Product(7, "Bread", "UK", 20, 5, 50);
         array[7] = new Product(8, "Bread", "US", 23, 6, 30);
         array[8] = new Product(9, "Bread", "FR", 25, 5, 20);
-        System.out.println("\nЕлементи списку\n");
-        for (int i = 0; i < array.length; i++) {
-            System.out.println(array[i].toString());
-        }
+        printArray(array);
         System.out.println("\nЗавдання а - список товарів для заданого найменування");
         enteredName(array, in);
         System.out.println("\nЗавдання b - список товарів для заданого найменування, ціна яких не перевищує задану");
