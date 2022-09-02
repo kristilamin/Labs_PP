@@ -12,7 +12,6 @@ public class Laboratorna {
         }
         Fibonacci object = new Fibonacci();
         System.out.print("\nВаше число: " + object.getNumber(pozucia) + "\n\n");
-
     }
 
     static class Fibonacci{
@@ -28,8 +27,7 @@ public class Laboratorna {
                 }
                 return prev = (long)(Math.pow(-1, remember+1) * prev);
             }
-            long prev = 0;
-            return prev;
+            return 0;
         }
     }
 }
