@@ -18,8 +18,8 @@ public class BaseDroid {
     }
     @Override
     public String toString() {
-        return name + "\tDamage = " + damage + "\tHeal = " + heal +
-                "\tArmor = " + armor + "\tWeapon = " + weapon + "\tAccuracy = " + accuracy + "\tHealth = " + health;
+        return name + "\t\tDamage = " + damage + "\t\tHeal = " + heal +
+                "\t\tArmor = " + armor + "\t\tAccuracy = " + accuracy + "\t\tHealth = " + health + "\t\tWeapon = " + weapon;
     }
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
