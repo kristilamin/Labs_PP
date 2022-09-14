@@ -2,6 +2,7 @@ package com.company.battle;
 import com.company.droid.BaseDroid;
 import com.company.droid.Teams;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
@@ -50,66 +51,55 @@ public class Battle {
             return 2;
         }
     }
-    public static BaseDroid chooseFighter(int number, Teams droid1){
-        switch (number) {
-            case 1:
-                return droid1.getdroid_1();
-            case 2:
-                return droid1.getdroid_2();
-            case 3:
-                return droid1.getdroid_3();
-            case 4:
-                return droid1.getdroid_4();
-            case 5:
-                return droid1.getdroid_5();
-            case 6:
-                return droid1.getdroid_6();
-            case 7:
-                return droid1.getdroid_7();
-            default:
-                System.out.println("\nWrong input! [automatically chosen Droid 1]");
-                return droid1.getdroid_1();
+    public static BaseDroid chooseFighter(int number){
+        if(number > Teams.droids.length || number < 0){
+            System.out.println("\nWrong input! [automatically chosen Droid 1]");
+            return Teams.droids[0];
         }
+        return Teams.droids[number-1];
     }
     public static void teamFight(Scanner in) throws InterruptedException {
-        Teams droid1 = new Teams();
-        droid1.showFighters();
-        ArrayList<Integer> firstTeam = new ArrayList<>();
-        ArrayList<Integer> secondTeam = new ArrayList<>();
+        Teams droid = new Teams();
+        droid.showFighters();
+        List<Integer> firstTeam = new ArrayList<>();
+        List<Integer> secondTeam = new ArrayList<>();
         System.out.print("Choose fighters for team 1 [end - other number]: ");
         addFighters(in, firstTeam);
         System.out.print("Choose fighters for team 2 [end - other number]: ");
         addFighters(in, secondTeam);
         int checker1 = 0;
         int checker2 = 0;
-        if (firstTeam.size() != secondTeam.size()) {
+        if (firstTeam.size() != secondTeam.size())
             System.out.println("\nTeams are not equal!");
-        } else {
+        else {
             for (int i = 0; i < firstTeam.size(); i++) {
-                BaseDroid firstDroid = chooseFighter(firstTeam.get(i), droid1);
-                BaseDroid secondDroid = chooseFighter(secondTeam.get(i), droid1);
+                BaseDroid firstDroid = chooseFighter(firstTeam.get(i));
+                BaseDroid secondDroid = chooseFighter(secondTeam.get(i));
                 Battle battleArena = new Battle(firstDroid, secondDroid);
                 int winner = battleArena.startFight1vs1();
-                if (winner == 1) {
+                if (winner == 1)
                     checker1++;
-                } else {
+                else
                     checker2++;
-                }
-            }if (checker1 > checker2) {
-                System.out.println("\n---------First team won!---------");
-                System.out.println("\n*******************************************************************************************************\n");
-                Congratulation();
-            } else if (checker2 > checker1) {
-                System.out.println("\n---------Second team won!---------");
-                System.out.println("\n*******************************************************************************************************\n");
-                Congratulation();
-            } else {
-                System.out.println("\n------------Draw!------------");
-                System.out.println("\n*******************************************************************************************************\n");
             }
+            winnerTeam(checker1,checker2);
         }
     }
-    private static void addFighters(Scanner in, ArrayList<Integer> firstTeam){
+    public static void winnerTeam(int checker1, int checker2){
+        if (checker1 > checker2) {
+            System.out.println("\n---------First team won!---------");
+            System.out.println("\n*******************************************************************************************************\n");
+            congratulation();
+        } else if (checker2 > checker1) {
+            System.out.println("\n---------Second team won!---------");
+            System.out.println("\n*******************************************************************************************************\n");
+            congratulation();
+        } else {
+            System.out.println("\n------------Draw!------------");
+            System.out.println("\n*******************************************************************************************************\n");
+        }
+    }
+    private static void addFighters(Scanner in, List<Integer> firstTeam){
         while (in.hasNextInt()) {
             int adder = in.nextInt();
             if (adder > 7 || adder < 1)
@@ -117,7 +107,27 @@ public class Battle {
             firstTeam.add(adder);
         }
     }
-    public static void Hello(){
+    public static void options(){
+        System.out.println("\nFighter vs Fighter - [1]");
+        System.out.println("Team vs Team - [2]");
+        System.out.println("Exit - [3]");
+        System.out.print("\nChoose battle style: ");
+    }
+    public static void duelFight(Scanner in) throws InterruptedException {
+        Teams droid = new Teams();
+        droid.showFighters();
+        System.out.print("Choose number of first fighter: ");
+        int numfighter1 = in.nextInt();
+        System.out.print("Choose number of second fighter: ");
+        int numfighter2 = in.nextInt();
+        BaseDroid firstDroid = Battle.chooseFighter(numfighter1);
+        BaseDroid secondDroid = Battle.chooseFighter(numfighter2);
+        Battle battleArena = new Battle(firstDroid, secondDroid);
+        battleArena.startFight1vs1();
+        Battle.congratulation();
+    }
+    public static void hello(){
+        System.out.println();
         System.out.println("""
 ██╗░░██╗███████╗██╗░░░░░██╗░░░░░░█████╗░
 ██║░░██║██╔════╝██║░░░░░██║░░░░░██╔══██╗
@@ -127,7 +137,7 @@ public class Battle {
 ╚═╝░░╚═╝╚══════╝╚══════╝╚══════╝░╚════╝░
                 """);
     }
-    public static void Congratulation(){
+    public static void congratulation(){
         System.out.println("""
 
                 ░░░░░░░░░░▄▄▄▄▄▄▄░░░░░░░░░░
